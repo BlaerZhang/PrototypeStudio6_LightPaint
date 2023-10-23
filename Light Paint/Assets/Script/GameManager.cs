@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (Display.displays.Length > 1)
+        if (Display.displays.Length > 1 && SceneManager.GetActiveScene().name == "Guess")
         {
             Display.displays[0].Activate();
             Display.displays[1].Activate();
@@ -41,5 +41,28 @@ public class GameManager : MonoBehaviour
         // }
 
         GameObject.Find("Mask").GetComponent<Image>().DOFade(0, 2);
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void ClearCanvas()
+    {
+        GameObject[] lines = GameObject.FindGameObjectsWithTag("Line");
+        Image mask = GameObject.Find("Mask").GetComponent<Image>();
+        
+        foreach (var line in lines)
+        {
+            Destroy(line);
+        }
+
+        Sequence flash = DOTween.Sequence();
+        flash
+            .Append(mask.DOColor(Color.white, 0.1f))
+            .Append(mask.DOColor(Color.black, 0.5f));
+        flash.Play();
+
     }
 }
