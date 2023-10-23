@@ -24,7 +24,8 @@ public class MenuManager : MonoBehaviour
     
     public void ToZen()
     {
-        SceneManager.LoadScene("Zen");
+        Image mask = GameObject.Find("Mask").GetComponent<Image>();
+        mask.DOFade(1, 1f).OnComplete((() => { SceneManager.LoadScene("Zen"); }));
     }
 
     public void ToDrawNGuess()
